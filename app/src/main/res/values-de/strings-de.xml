@@ -121,7 +121,6 @@
     <string name="title_activity_display_qrcode">Einstellungen per QR-Code teilen</string>
     <string name="title_activity_send_feed_back">Feedback an Jamorham senden</string>
     <string name="title_activity_save_logs">Logs speichern</string>
-    <string name="title_activity_maps">Parakeet Karte</string>
     <string name="title_activity_display_preferences">Anzeigeeinstellungen</string>
     <string name="export_submenu">Import-/Export-Einstellungen</string>
     <string name="action_resend_to_watch">Werte erneut an Smartwatch senden</string>
@@ -158,9 +157,6 @@
     <string name="till">bis</string>
     <string name="low_predicted">Niedrig erwartet</string>
     <string name="in">in</string>
-    <string name="yes_enter_setup_mode">Ja, Setup-Modus starten</string>
-    <string name="nokeep_parakeet_as_it_is">Parakeet unverändert lassen</string>
-    <string name="are_you_sure_you_want_switch_parakeet_to_setup">Parakeet Setup-Modus starten?\n\nGewöhnlich ist dies nur erforderlich, um den Parakeet neu zu konfigurieren (Transmitter-ID, etc.).</string>
     <string name="split_delete_or_do_nothing">Split, löschen oder nichts tun</string>
     <string name="split_this_block_in_two">Block in zwei teilen</string>
     <string name="delete_this_time_block">Zeitblock entfernen</string>
@@ -175,8 +171,6 @@
     <string name="in_libre_all_house_mode_no_readings_collected_yet">"Im Libre-Whole-House-Modus: noch keine Messungen gesammelt."</string>
     <string name="in_libre_all_house_mode_last_data_collected">"In Libre-Whole-House-Modus: Letzter Werteempfang "</string>
     <string name="space_minute_ago">" Minute her"</string>
-    <string name="show_parakeet_map">Parakeet Map anzeigen</string>
-    <string name="switch_parakeet_to_setup_mode">Parakeet in Setup-Modus starten</string>
     <string name="view_events_log">Log anzeigen</string>
     <string name="show_libre_trend">Libre-Trend anzeigen</string>
     <string name="libre_15_minutes_graph">Libre 15 Minuten Kurve</string>
@@ -184,6 +178,8 @@
     <string name="share_config_via_qr_code">Einstellungen per QR-Code senden</string>
     <string name="check_for_updated_version">Auf Aktualisierung prüfen</string>
     <string name="current_version_is_up_to_date">Keine neue Version im gewählten Update-Kanal</string>
+    <string name="title_dialog_check_for_update">Kein Update im %1$s Kanal</string>
+    <string name="message_dialog_check_for_update">Eine neuere Version kann in anderen Kanälen existieren.</string>
     <string name="send_feedback_to_developer">Feedback an Entwickler senden</string>
     <string name="home_screen">Startbildschirm</string>
     <string name="event_logs">Ereignisprotokolle</string>
@@ -286,6 +282,8 @@
     <string name="pref_summary_show_treatments">Zeige Behandlungspunkte in der Kurve</string>
     <string name="pref_use_wear_health">Benutze die Wear Health-Daten</string>
     <string name="pref_summary_use_wear_health">Sammle und zeige den Schrittzähler an, falls verfügbar.</string>
+    <string name="summary_enable_wear_auto_update">Wenn diese Option aktiviert ist, wird xDrip auf der Uhr automatisch aktualisiert, um es an die Version auf dem Smartphone anzupassen.</string>
+    <string name="title_enable_wear_auto_update">Automatisches Wear-Update</string>
     <string name="pebble_integration">Pebble Integration</string>
     <string name="send_data_to_pebble_watchface">Daten an Pebble Watch senden</string>
     <string name="pebble_watch_integration">Pebble Uhr Integration</string>
@@ -358,6 +356,9 @@
     <string name="all_alerts_disabled_until">"Alle Warnungen deaktiviert bis "</string>
     <string name="low_alerts_disabled_until">"Warnungen (niedrig) deaktiviert bis "</string>
     <string name="high_alerts_disabled_until">"Warnungen (Hoch) deaktiviert bis "</string>
+    <string name="you_reenable">Wieder aktivieren</string>
+    <string name="active_alert_rerise_at">Es liegt eine aktive Warnmeldung mit dem Namen „%1$s“ vor. Die Warnmeldung wird um %2$s erneut angezeigt (noch %3$s Minuten).</string>
+    <string name="active_alert_snoozed_until">Es liegt eine aktive Warnmeldung mit dem Namen „%1$s“ vor. Die Warnmeldung wurde bis %2$s zurückgestellt (noch %3$s Minuten).</string>
     <string name="default_snooze">Standard Snooze</string>
     <string name="until_you_reenable">Bis zur erneuten Aktivierung</string>
     <string name="set">Setze</string>
@@ -406,8 +407,6 @@
     <string name="web_feedback_form_for_sending_messages">Web Feedback-Formular für Nachrichten und Bewertungen an die Entwickler</string>
     <string name="be_master_for_followers">Master für Follower</string>
     <string name="this_device_will_send_data_to_followers">Dieses Gerät sendet Daten an Follower</string>
-    <string name="send_parakeet_map_location_to_followers">Parakeet Map an Follower senden</string>
-    <string name="sync_parakeet_geolocation">Parakeet GeoLocation synchronisieren</string>
     <string name="disable_all_sync_features">Alle Sync-Funktionen deaktivieren</string>
     <string name="temporary_work_around_disable_all_sync_detail">Temporärer Work-around, stoppt alle Synchronisationen. Nach Aktivieren kann ein Neustart notwendig sein. Mit Vorsicht nutzen!</string>
     <string name="automatic_updates_crash_reports_and_feedback">Automatische Updates, Fehlerberichte und Feedback an Entwickler senden</string>
@@ -441,9 +440,6 @@
     <string name="notify_when_predicted_low_time_reaches_threshold">Benachrichtigen, wenn die vorhergesagte Zeitschwelle erreicht wird</string>
     <string name="predicted_low_sound">Sound: Vorhersage niedrig</string>
     <string name="choose_sound_used_for_predicted_low_alarm">Sound für vorhergesagten Niedrig-Alarm verwenden.</string>
-    <string name="notify_when_parakeet_device_stops_checking_in">Benachrichtigen, wenn Parakeet keine Checkins sendet</string>
-    <string name="parakeet_related_alerts">Parakeet Warnungen</string>
-    <string name="raise_parakeet_notification_silently_when_charging">Beim Laden lautlose Parakeet Warnungen</string>
     <string name="silent_alert_when_charging">Alarme lautlos beim Laden</string>
     <string name="alerts_start_out_snoozed_and_must_persist_for_a_while">Warnungen starten lautlos und werden nach einer Zeitspanne aktiviert</string>
     <string name="alarms_silenced_during_telephone_calls">Alarme bei Telefonaten lautlos</string>
@@ -526,7 +522,6 @@
     <string name="show_graph_total_average">Absolute Durchschnittswerte im Diagramm anzeigen</string>
     <string name="show_momentum_working_curve">Momentum Korrekturkurve anzeigen</string>
     <string name="show_noise_workings">Rauschreduktion anzeigen</string>
-    <string name="parakeet_and_extra_features">Parakeet und weitere Testfunktionen</string>
     <string name="insulin_duration_hours">Insulin Dauer in Stunden</string>
     <string name="default_liver_sensitivity_ratio">Leber-Empfindlichkeit (Liver Sensitivity Ratio)</string>
     <string name="key_is_used_instead_of_google_account">Key wird anstelle des Google-Kontos verwendet</string>
@@ -560,7 +555,7 @@
     <string name="battery">Batterie</string>
     <string name="xbridge_battery">xBridge Batterie</string>
     <string name="limitter_battery">Libre Akku</string>
-    <string name="parakeet_battery">Parakeet Batterie</string>
+    <string name="uploader_battery">Akku des Hochladers</string>
     <string name="after_calibration_rewrite_history">Nach Kalibrierung: Rohwerte an neuen Wert anpassen</string>
     <string name="rewrite_history">Übersicht neu anlegen</string>
     <string name="grid_time_lines_visible">Zeitrasterlinien sichtbar</string>
@@ -648,6 +643,10 @@
     <string name="libre_use_smoothed_data_summary">Verwende Durchschnittswerte von 5 Punkten, um geglättete Libre-Daten zu erhalten.</string>
     <string name="libre_use_smoothed_data_title">Glätte Libre-Daten.</string>
     <string name="retrieve_blukon_history_title">Empfange historische Libre-Daten</string>
+    <string name="summary_libre_one_minute_interval">Empfange Daten im Minutentakt von Libre. Starte dein Smartphone neu, damit die Änderungen wirksam werden.</string>
+    <string name="title_libre_one_minute_interval">Ein (1) Minuten Intervall Libre</string>
+    <string name="summary_nsfollow_sample_period">Standard: 5 min\nAktuell: %s</string>
+    <string name="title_sample_period">Erhebungszeitraum</string>
     <string name="retrieve_blukon_history_summary">Empfange verpasste Werte vom BlueCon-Empfänger wenn er sich wieder verbindet.</string>
     <string name="interpret_share_raw">Falls du Share benutzt, wird xDrip Werte anzeigen, die normalerweise auf dem Empfänger versteckt sind.</string>
     <string name="interpret_raw">Rohwerte interpretieren</string>
@@ -821,6 +820,7 @@
     <string name="use_flair_colors">Benutze Flair-Farben</string>
     <string name="upper_title_bar_flair">Obere Titelleiste</string>
     <string name="lower_button_bar_falir">Farbe der System-Navigationsleiste</string>
+    <string name="title_language">Sprache</string>
     <string name="force_english_text">Englisch erzwingen</string>
     <string name="using_local_language">Benutze momentan die lokale Sprache deines Geräts.</string>
     <string name="forcing_alternate_language">Erzwingt momentan das Benutzen einer alternativen Sprache</string>
@@ -833,7 +833,6 @@
     <string name="display_calculations">Insulin-/Kohenhydratberechnungen anzeigen</string>
     <string name="display_calculations_everytime">Insulin-/Kohenhydratberechnungen immer anzeigen.</string>
     <string name="always_show_bolus_wizard_preview">Zeige immer die Bolus-Assistent-Vorschau an.</string>
-    <string name="show_test_features">Zeige Extra- und Alpha-Testfunktionen</string>
     <string name="show_reminder_features">Zeige Erinnerungsmenüs und -funktionen.</string>
     <string name="enable_reminder_features">Reminder-Funktionen aktivieren</string>
     <string name="display_mathamatical_simulations">Mathematische Simulationen basierend auf den Profildaten und Kohlenhydrat-/Insulinlogs anzeigen</string>
@@ -903,6 +902,9 @@
     <string name="only_stop_your_sensor_when_you_actually_plan">Stoppe den Sensor nur, wenn Du auch planst ihn zu entfernen. Ansonsten solltest Du ihn laufen lassen!</string>
     <string name="restart_collector">Datensammler neustarten</string>
     <string name="forget_device">Gerät löschen</string>
+    <string name="re_read_transmitter">Sender erneut lesen</string>
+    <string name="tx_reread_confirmation_title">Sender/Transmitter Details aktualisieren</string>
+    <string name="tx_reread_confirmation_message">Zwingt xDrip dazu, die Eigenschaften des Transmitters erneut einzulesen. Bietet keinen Vorteil, wenn sich der Transmitter nicht verändert hat; es kann zu vorübergehenden Änderungen auf der Statusseite kommen. Am besten zwischen den Sensor-Sitzungen verwenden.</string>
     <string name="other_notes">Andere Notizen:</string>
     <string name="delete_future_data">Zukünftige Daten löschen</string>
     <string name="show_only_untranslated">Zeige nur unübersetztes</string>
@@ -954,7 +956,6 @@
     <string name="are_you_sure">Bist Du sicher?</string>
     <string name="g4_share_receiver">G4 Share Receiver</string>
     <string name="bluetooth_wixel">Bluetooth Wixel</string>
-    <string name="parakeet_wifi">Parakeet / Wifi</string>
     <string name="other">Sonstiges</string>
     <string name="which_software_is_the_wixel_running">Mit welcher Software läuft Wixel?</string>
     <string name="start_source_setup_wizard">Starte Quellen-Setup-Assistenten</string>
@@ -970,7 +971,6 @@
     <string name="use_librealarm">Verwende LibreAlarm-App als Datenquelle?</string>
     <string name="noise_blocking">Verrauschungsunterdrückung</string>
     <string name="level_at_which_noisy_data_should_not_be_broadcast">Level ab welchem verrauschte Daten nicht übertragen werden weil sie empfangende Apps verwirren können</string>
-    <string name="low_parakeet_battery">Niedrige Parakeet Batterie</string>
     <string name="glucose_units_mmol_or_mgdl">Glukose-Einheiten mmol/L oder mg/dL</string>
     <string name="is_your_typical_glucose_value">Ist Dein typischer Blutzuckerwert 5.5 (mmol/L) oder 100 (mg/dL)? Wähle bitte folgend</string>
     <string name="settings_updated_to_mmol">Einstellungen aktualisiert auf mmol/L</string>
@@ -1236,10 +1236,50 @@
     <string name="title_tidepool_upload_no_treatment">Keine Behandlungen hochladen</string>
     <string name="title_tidepool">Tidepool</string>
     <!-- Nocturne connect flow -->
+    <string name="nocturne">Nocturne</string>
+    <string name="nocturne_connect_activity_label">Verbinden mit Nocturne</string>
+    <string name="nocturne_settings_summary">Zu Nocturne V4 API hochladen</string>
+    <string name="title_nocturne_upload_enable">Nocturne Upload aktivieren</string>
+    <string name="title_nocturne_instance_url">URL der Nocturne Instanz</string>
+    <string name="nocturne_instance_url_dialog_message">Geben Sie die URL Ihrer Nocturne Instanz ein  (z.B.https://mynocturne.example.com)</string>
+    <string name="nocturne_connect_pref_summary"> xDrip mit deiner Nocturne Instanz zulassen</string>
+    <string name="title_nocturne_upload_sgv">SGV hochladen</string>
+    <string name="summary_nocturne_upload_sgv">CGM Sensor: Glukosemessungen hochladen</string>
     <string name="title_nocturne_upload_treatments">Behandlungen hochladen</string>
+    <string name="summary_nocturne_upload_treatments">Boluse, Kohlenhydrate, Notizen und Geräte-Ereignisse hochladen</string>
+    <string name="title_nocturne_upload_calibrations">Kalibrierung(en) hochladen</string>
+    <string name="summary_nocturne_upload_calibrations">Sensorkalibrierung(en) hochladen</string>
+    <string name="title_nocturne_upload_bloodtests">Bluttest hochladen</string>
+    <string name="summary_nocturne_upload_bloodtests">Kapillarblutwert(e) des Fingerstichs hochladen</string>
+    <string name="title_nocturne_upload_heartrate">Upload Herzfrequenz</string>
+    <string name="summary_nocturne_upload_heartrate">Herzfrequenzdaten hochladen</string>
+    <string name="title_nocturne_upload_stepcount">Schrittzahl hochladen</string>
+    <string name="summary_nocturne_upload_stepcount">Schrittzahl hochladen</string>
+    <string name="title_nocturne_upload_devicestatus">Gerätestatus hochladen</string>
+    <string name="summary_nocturne_upload_devicestatus">Akkustand und Ladezustand hochladen</string>
+    <string name="title_nocturne_upload_motion">Bewegungswerte</string>
+    <string name="summary_nocturne_upload_motion">Bewegungsdaten</string>
     <string name="title_nocturne_use_mobile">Mobile Daten verwenden</string>
+    <string name="summary_nocturne_use_mobile">Upload (Datentransfer) über mobile Daten erlauben</string>
     <!-- NocturneConnectActivity (deep link receiver) -->
+    <string name="nocturne_connect_err_missing_url">Fehlende URL der Nocturne Instanz</string>
+    <string name="nocturne_connect_err_invalid_url">Ungültige URL</string>
+    <string name="nocturne_connect_warn_http">Unsichere Verbindung (HTTP) verwenden?</string>
+    <string name="nocturne_connect_err_bad_scheme">URL muss mit http:// oder https:// beginnen</string>
+    <string name="nocturne_connect_already_connected">Bereits mit %1$s verbunden</string>
+    <string name="nocturne_connect_switch_title">Nocturne Instanz wechseln?</string>
+    <string name="nocturne_connect_switch_message">Sie sind verbunden mit:\n%1$s\n\nWechseln zu:\n%2$s?</string>
+    <string name="nocturne_connect_switch_positive">Umschalten/wechseln</string>
+    <string name="nocturne_connect_unknown_instance">(unbekannt)</string>
+    <string name="nocturne_connect_confirm_title">Verbinden mit Nocturne?</string>
+    <string name="nocturne_connect_confirm_message">Verbinde xDrip zu:\n\n%1$s</string>
+    <string name="nocturne_connect_confirm_positive">Verbunden</string>
     <!-- NocturneConnectHelper (device flow UI) -->
+    <string name="nocturne_already_connected_disconnect">Bereits mit Nocturne verbunden. Zuerst trennen?</string>
+    <string name="nocturne_disconnect">Trenne</string>
+    <string name="nocturne_disconnected">Verbindung zu Nocturne getrennt</string>
+    <string name="nocturne_set_url_first">Bitte geben Sie zuerst Ihre Nocturne Instanz URL ein</string>
+    <string name="nocturne_connecting">Verbinden mit Nocturne...</string>
     <string name="show_help">Hilfe anzeigen</string>
     <string name="load_save_settings_on_sdcard">Einstellungen von/auf SD-Karte laden/speichern</string>
     <string name="delete_all_bg_readings">Alle BG-Werte löschen</string>

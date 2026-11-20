@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.preference.PreferenceManager;
+import androidx.preference.PreferenceManager;
 
 import android.util.Log;
 import android.widget.Toast;
@@ -75,7 +75,6 @@ import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.DateTypeAdapter;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -382,7 +381,6 @@ public class WatchUpdaterService extends WearableListenerService implements
         if (entries != null) {
             final Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .registerTypeAdapter(Date.class, new DateTypeAdapter())
                     .serializeSpecialFloatingPointValues()
                     .create();
 
@@ -448,7 +446,6 @@ public class WatchUpdaterService extends WearableListenerService implements
 
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .registerTypeAdapter(Date.class, new DateTypeAdapter())
                     .serializeSpecialFloatingPointValues()
                     .create();
 
@@ -522,7 +519,6 @@ public class WatchUpdaterService extends WearableListenerService implements
 
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .registerTypeAdapter(Date.class, new DateTypeAdapter())
                     .serializeSpecialFloatingPointValues()
                     .create();
 
@@ -569,7 +565,6 @@ public class WatchUpdaterService extends WearableListenerService implements
 
             Gson gson = new GsonBuilder()
                     .excludeFieldsWithoutExposeAnnotation()
-                    .registerTypeAdapter(Date.class, new DateTypeAdapter())
                     .serializeSpecialFloatingPointValues()
                     .create();
 
@@ -968,7 +963,7 @@ public class WatchUpdaterService extends WearableListenerService implements
                         Pref.setBoolean("force_wearG5", false);
                         final String msgDisableWear = getResources().getString(R.string.notify_disable_wearG5_on_missedreadings, bg_wear_missed_minutes);
                         JoH.static_toast_long(msgDisableWear);
-                        Log.e(TAG, "wearIsConnected disable force_wearG5:" + Pref.getBooleanDefaultFalse("force_wearG5") + " msg=" + msgDisableWear);
+                        Log.e(TAG, "wearIsConnected disable force_wearG5:" + Pref.getBooleanDefaultFalse("force_wearG5") + " msg=Disabling Force Wear Collection Service due to " + bg_wear_missed_minutes + " minutes of missed readings on watch!");
                         sendWearLocalToast(msgDisableWear, Toast.LENGTH_LONG);
                     } else if (ACTION_START_COLLECTOR.equals(action)) {//KS
                         Log.d(TAG, "onStartCommand Action=" + ACTION_START_COLLECTOR + " Path=" + START_COLLECTOR_PATH);
