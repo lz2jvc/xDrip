@@ -10,6 +10,10 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+      - name: Create Fixed Debug Keystore
+        run: |
+          mkdir -p ~/.android
+          keytool -genkeypair -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=xDrip2,O=Android,C=BG" -startdate "2025/01/01 00:00:00"
       - name: Build Debug APK
         run: chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
