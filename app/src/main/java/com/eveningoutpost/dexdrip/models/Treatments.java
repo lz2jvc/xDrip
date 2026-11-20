@@ -1064,7 +1064,11 @@ public class Treatments extends Model {
             // early optimisation exclusion
 
             mytime = (long) ((thisTreatment.timestamp / stepms) * stepms); // effects of treatment occur only after it is given / fit to slot time
-            tendtime = mytime + 36 * HOUR_IN_MS;     // 36 hours max look (24h history plus 12h forecast)
+            final long maxDurationMs = multipleInsulins
+        ? (long) (MINUTE_IN_MS * Math.max(36 * 60, InsulinManager.getMaxEffect(true)))
+        : 36 * HOUR_IN_MS;
+tendtime = mytime + maxDurationMs;
+    
             if (tendtime > startTime + 30 * HOUR_IN_MS)
                 tendtime = startTime + 30 * HOUR_IN_MS;   // dont look more than 6h in future // TODO review time limit
             if (thisTreatment.insulin > 0) {
