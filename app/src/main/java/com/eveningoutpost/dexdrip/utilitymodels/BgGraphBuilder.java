@@ -1839,7 +1839,7 @@ public class BgGraphBuilder {
                                     float yPosition = (float) height;
                                     yPosition = clampNonGlucoseY(yPosition + windowBottomOffset);
                                     PointValue pv = new HPointValue((double) fuzzed_timestamp, yPosition);
-                                    ((PointValueExtended) pv).note = String.format("%.2f u", iob.iob);
+                                    pv.setLabel(String.format("%.2f u", iob.iob));
                                     iobValues.add(pv);
                                     double activityheight = iob.jActivity * 3; // currently scaled by profile
                                     if (activityheight > cob_insulin_max_draw_value)
@@ -2476,7 +2476,9 @@ public class BgGraphBuilder {
             final double ypos = pointValue.getY();
 
             final String message;
-
+            if (alternate.length() == 0 && pointValue.getLabelAsChars() != null && pointValue.getLabelAsChars().length > 0) {
+    alternate = String.valueOf(pointValue.getLabelAsChars());
+}
             if (alternate.length() > 0) {
                 message = timeFormat.format(time) + "    " + alternate;
             } else {
