@@ -15,38 +15,11 @@ jobs:
           SEED: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
           mkdir -p ~/.android
-          cat << 'EOF' > make_key.py
-          import os, hashlib
-          seed = os.environ["SEED"].encode("utf-8")
-          def next_prime(b):
-              n = int.from_bytes(b, "big") | (1 << 1023) | 1
-              while True:
-                  if all(n % p != 0 for p in (3,5,7,11,13,17,19,23,29,31)) and pow(2, n-1, n) == 1:
-                      return n
-                  n += 2
-          p = next_prime(hashlib.sha512(seed + b"p").digest() + hashlib.sha512(seed + b"p2").digest())
-          q = next_prime(hashlib.sha512(seed + b"q").digest() + hashlib.sha512(seed + b"q2").digest())
-          n = p * q
-          e = 65537
-          phi = (p - 1) * (q - 1)
-          d = pow(e, -1, phi)
-          dp, dq, qi = d % (p - 1), d % (q - 1), pow(q, -1, p)
-          def der_len(l):
-              return bytes([l]) if l < 128 else bytes([0x80 | ((l.bit_length() + 7) // 8)]) + l.to_bytes((l.bit_length() + 7) // 8, "big")
-          def der_int(x):
-              b = x.to_bytes((x.bit_length() + 8) // 8, "big")
-              return b"\x02" + der_len(len(b)) + b
-          def der_seq(items):
-              body = b"".join(items)
-              return b"\x30" + der_len(len(body)) + body
-          pkcs1 = der_seq([der_int(0), der_int(n), der_int(e), der_int(d), der_int(p), der_int(q), der_int(dp), der_int(dq), der_int(qi)])
-          pkcs8 = der_seq([der_int(0), der_seq([b"\x06\x09\x2a\x86\x48\x86\xf7\x0d\x01\x01\x01\x05\x00"]), b"\x04" + der_len(len(pkcs1)) + pkcs1])
-          open("key.der", "wb").write(pkcs8)
-          EOF
-          python3 make_key.py
-          openssl req -new -x509 -key key.der -keyform DER -out cert.pem -days 10000 -subj "/CN=xDrip2/O=Android/C=BG" -set_serial 123456789
-          openssl pkcs12 -export -in cert.pem -inkey key.der -inkeyform DER -out ~/.android/debug.keystore -name androiddebugkey -passout pass:android
-          rm -f make_key.py key.der cert.pem
+          python3 -c 'import os,hashlib; s=os.environ["SEED"].encode(); open("rnd.bin","wb").write(b"".join(hashlib.sha512(s+str(i).encode()).digest() for i in range(200)))'
+          openssl genrsa -rand rnd.bin -out key.pem 2048
+          openssl req -new -x509 -key key.pem -out cert.pem -days 10000 -subj "/CN=xDrip2/O=Android/C=BG" -set_serial 123456789
+          openssl pkcs12 -export -in cert.pem -inkey key.pem -out ~/.android/debug.keystore -name androiddebugkey -passout pass:android
+          rm -f rnd.bin key.pem cert.pem
           keytool -list -v -keystore ~/.android/debug.keystore -storepass android | grep -E "SHA1:|SHA256:"
       - name: Build Debug APK
         run: chmod +x gradlew && ./gradlew assembleDebug
