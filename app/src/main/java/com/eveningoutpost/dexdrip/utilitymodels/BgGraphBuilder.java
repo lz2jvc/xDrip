@@ -30,6 +30,7 @@ import com.eveningoutpost.dexdrip.models.JoH;
 import com.eveningoutpost.dexdrip.models.Libre2RawValue;
 import com.eveningoutpost.dexdrip.models.Prediction;
 import com.eveningoutpost.dexdrip.models.Profile;
+import com.eveningoutpost.dexdrip.insulin.InsulinManager;
 import com.eveningoutpost.dexdrip.models.StepCounter;
 import com.eveningoutpost.dexdrip.models.Treatments;
 import com.eveningoutpost.dexdrip.models.UserError;
@@ -1847,7 +1848,8 @@ public class BgGraphBuilder {
                                     yPosition = (float) activityheight;
                                     yPosition = clampNonGlucoseY(yPosition + windowBottomOffset);
                                     PointValue av = new HPointValue((double) fuzzed_timestamp, yPosition);
-                                    av.setLabel(String.format("%.2f u/h", iob.jActivity));
+                                    String rapidName = (InsulinManager.getProfile(0) != null) ? InsulinManager.getProfile(0).getName() : "";
+                                    av.setLabel(String.format("%.2f u/h %s", iob.jActivity, rapidName).trim());
                                     activityValues.add(av);
                                 }
 
