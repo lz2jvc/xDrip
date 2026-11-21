@@ -59,7 +59,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.eveningoutpost.dexdrip"
+        applicationId "com.eveningoutpost.dexdrip.variant"
         minSdkVersion 26
         // increasing target SDK version can cause compatibility issues with Android 7+
         //noinspection ExpiredTargetSdkVersion
