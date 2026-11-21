@@ -1847,6 +1847,7 @@ public class BgGraphBuilder {
                                     yPosition = (float) activityheight;
                                     yPosition = clampNonGlucoseY(yPosition + windowBottomOffset);
                                     PointValue av = new HPointValue((double) fuzzed_timestamp, yPosition);
+                                    av.setLabel(String.format("%.2f u/h", iob.jActivity));
                                     activityValues.add(av);
                                 }
 
