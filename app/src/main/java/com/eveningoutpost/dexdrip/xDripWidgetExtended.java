@@ -67,19 +67,20 @@ public class xDripWidgetExtended extends AppWidgetProvider {
     private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId) {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.x_drip_widget_extended);
         Log.d(TAG, "Update extended widget signal received");
-
-        // Add behaviour: open xDrip on click
-        Intent intent = new Intent(context, Home.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.xDripWidgetExtended, pendingIntent);
-        displayCurrentInfo(appWidgetManager, appWidgetId, context, views);
-        try {
-            appWidgetManager.updateAppWidget(appWidgetId, views);
-        } catch (Exception e) {
-            Log.e(TAG, "Got exception in widget update: " + e);
-        }
-    }
-
+     try {
+         // Add behaviour: open xDrip on click
+         Intent intent = new Intent(context, Home.class);
+         int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+             flags |= PendingIntent.FLAG_IMMUTABLE;
+         }
+         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flags);
+         views.setOnClickPendingIntent(R.id.xDripWidgetExtended, pendingIntent);
+         displayCurrentInfo(appWidgetManager, appWidgetId, context, views);
+         appWidgetManager.updateAppWidget(appWidgetId, views);
+     } catch (Exception e) {
+         Log.e(TAG, "Got exception in widget update: " + e);
+     }
     @Override
     public void onAppWidgetOptionsChanged(Context context,
                                           AppWidgetManager appWidgetManager,
