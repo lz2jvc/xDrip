@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.widget.RemoteViews;
@@ -48,10 +49,14 @@ public class xDripWidgetExtended extends AppWidgetProvider {
         JoH.releaseWakeLock(wl);
     }
 
-    @Override
+        @Override
     public void onEnabled(Context context) {
         Log.d(TAG, "Extended widget enabled");
-        context.startService(new Intent(context, WidgetUpdateService.class));
+        try {
+            context.startService(new Intent(context, WidgetUpdateService.class));
+        } catch (Exception e) {
+            Log.e(TAG, "Error starting WidgetUpdateService: " + e);
+        }
     }
 
     @Override
