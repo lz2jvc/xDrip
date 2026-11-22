@@ -81,6 +81,7 @@ public class xDripWidgetExtended extends AppWidgetProvider {
      } catch (Exception e) {
          Log.e(TAG, "Got exception in widget update: " + e);
      }
+  }
     @Override
     public void onAppWidgetOptionsChanged(Context context,
                                           AppWidgetManager appWidgetManager,
