@@ -5,6 +5,7 @@ import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.widget.RemoteViews;
@@ -38,7 +39,11 @@ public class xDripWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         Log.d(TAG, "Widget enabled");
-        context.startService(new Intent(context, WidgetUpdateService.class));
+        try {
+            context.startService(new Intent(context, WidgetUpdateService.class));
+        } catch (Exception e) {
+            Log.e(TAG, "Error starting WidgetUpdateService: " + e);
+        }
     }
 
     @Override
@@ -51,12 +56,16 @@ public class xDripWidget extends AppWidgetProvider {
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.x_drip_widget);
         Log.d(TAG, "Update widget signal received");
 
-        //Add behaviour: open xDrip on click
-        Intent intent = new Intent(context, Home.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-        views.setOnClickPendingIntent(R.id.xDripwidget, pendingIntent);
-        displayCurrentInfo(appWidgetManager, appWidgetId, context, views);
         try {
+            //Add behaviour: open xDrip on click
+            Intent intent = new Intent(context, Home.class);
+            int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                flags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flags);
+            views.setOnClickPendingIntent(R.id.xDripwidget, pendingIntent);
+            displayCurrentInfo(appWidgetManager, appWidgetId, context, views);
             appWidgetManager.updateAppWidget(appWidgetId, views);
             // needed to catch RuntimeException and DeadObjectException
         } catch (Exception e) {
@@ -97,5 +106,3 @@ public class xDripWidget extends AppWidgetProvider {
                 R.id.xDripwidget, maxWidth, maxHeight, null);
     }
 }
-
-
