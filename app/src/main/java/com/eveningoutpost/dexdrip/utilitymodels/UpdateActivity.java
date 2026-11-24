@@ -107,7 +107,7 @@ public class UpdateActivity extends BaseAppCompatActivity {
                 Log.d(TAG, "Using subversion: " + subversion);
             }
 
-            final String CHECK_URL = "https://github.com";
+            final String CHECK_URL = "https://api.github.com/repos/lz2jvc/xDrip/releases/latest";
 
             DOWNLOAD_URL = "";
             newversion = 0;
