@@ -1175,6 +1175,8 @@ public class Preferences extends BasePreferenceActivity implements SearchPrefere
             bindPreferenceSummaryToValue(findPreference("other_alerts_sound"));
             bindPreferenceSummaryToUnitizedValueAndEnsureNumeric(findPreference("persistent_high_threshold"));
             bindPreferenceSummaryToUnitizedValueAndEnsureNumeric(findPreference("forecast_low_threshold"));
+            bindPreferenceSummaryToValue(findPreference("persistent_high_alert_sound"));
+            bindPreferenceSummaryToValue(findPreference("bg_predict_alert_sound"));
 
             addPreferencesFromResource(R.xml.pref_data_source);
 
