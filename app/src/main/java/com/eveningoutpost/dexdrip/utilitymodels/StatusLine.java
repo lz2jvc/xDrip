@@ -189,7 +189,7 @@ public class StatusLine {
             final String extStatus = ExternalStatusService.getLastStatusLine();
             if (extStatus != null && extStatus.contains("COB:")) {
                 final String afterCob = extStatus.substring(extStatus.indexOf("COB:") + 4).trim();
-                final String numPart = afterCob.split("[^0-9.]");
+                final String numPart = afterCob.split("[^0-9.]")[0];
                 if (!numPart.isEmpty()) {
                     currentCob = Double.parseDouble(numPart);
                 }
