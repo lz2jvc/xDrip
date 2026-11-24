@@ -1860,6 +1860,7 @@ public class BgGraphBuilder {
                                     float yPosition = (float) height;
                                     yPosition = clampNonGlucoseY(yPosition + windowBottomOffset);
                                     PointValue pv = new HPointValue((double) fuzzed_timestamp, yPosition);
+                                    pv.setLabel(String.format("%.1f g COB", iob.cob));
                                     if (d)
                                         Log.d(TAG, "Cob total record: " + JoH.qs(height) + " " + JoH.qs(iob.cob) + " " + Double.toString(pv.getY()) + " @ timestamp: " + Long.toString(iob.timestamp));
                                     cobValues.add(pv); // warning should not be hardcoded
