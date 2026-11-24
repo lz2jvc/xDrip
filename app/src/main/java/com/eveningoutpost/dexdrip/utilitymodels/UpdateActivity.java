@@ -180,8 +180,6 @@ public class UpdateActivity extends BaseAppCompatActivity {
                         } else {
                             Log.d(TAG, "Failure getting update URL data: code: " + response.code());
                         }
-                   
-                }
                 } catch (Exception e) {
                     UserError.Log.e(TAG, "Exception in reading http update version " + e.toString());
                 }
