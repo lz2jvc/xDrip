@@ -23,9 +23,28 @@ public class WidgetUpdateService extends Service {
     {
         try {
             Context context = xdrip.getAppContext();
-            if (AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, xDripWidget.class)).length > 0
-                    || AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, xDripWidgetExtended.class)).length > 0) {
-                context.startService(new Intent(context, WidgetUpdateService.class));
+            int[] ids = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, xDripWidget.class));
+            int[] idsExtended = AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, xDripWidgetExtended.class));
+
+            if (ids.length > 0) {
+                Intent intent = new Intent(context, xDripWidget.class);
+                intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
+                context.sendBroadcast(intent);
+            }
+
+            if (idsExtended.length > 0) {
+                Intent intentExtended = new Intent(context, xDripWidgetExtended.class);
+                intentExtended.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                intentExtended.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, idsExtended);
+                context.sendBroadcast(intentExtended);
+            }
+
+            if (ids.length > 0 || idsExtended.length > 0) {
+                try {
+                    context.startService(new Intent(context, WidgetUpdateService.class));
+                } catch (Exception ignored) {
+                }
             }
         } catch (Exception e)
         {

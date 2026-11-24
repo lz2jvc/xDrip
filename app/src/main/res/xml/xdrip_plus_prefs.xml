@@ -126,7 +126,7 @@
                         app:colorpicker_selectNoneButtonText="@string/revert_to_default"
                         app:colorpicker_showHex="false" />
                     <com.eveningoutpost.dexdrip.utilitymodels.ColorPicker
-                        android:defaultValue="#334400"
+                        android:defaultValue="#BBFF00"
                         android:key="color_treatment_dark"
                         android:title="@string/treatment_color_dark"
                         app:colorpicker_noneSelectedSummaryText="@string/default_color_selected"
@@ -140,7 +140,7 @@
                         app:colorpicker_selectNoneButtonText="@string/revert_to_default"
                         app:colorpicker_showHex="false" />
                     <com.eveningoutpost.dexdrip.utilitymodels.ColorPicker
-                        android:defaultValue="#7700aa"
+                        android:defaultValue="#F49DFF"
                         android:key="color_predictive_dark"
                         android:title="@string/predictive_color_dark"
                         app:colorpicker_noneSelectedSummaryText="@string/default_color_selected"
@@ -157,7 +157,7 @@
                     android:title="@string/average_and_target_lines">
 
                     <com.eveningoutpost.dexdrip.utilitymodels.ColorPicker
-                        android:defaultValue="#558800"
+                        android:defaultValue="#99DD00"
                         android:key="color_average1_line"
                         android:title="@string/eight_hour_average_line"
                         app:colorpicker_noneSelectedSummaryText="@string/default_color_selected"
@@ -228,7 +228,7 @@
                     android:key="xdrip_plus_display_colorset5"
                     android:title="@string/backgrounds">
                     <com.eveningoutpost.dexdrip.utilitymodels.ColorPicker
-                        android:defaultValue="#212121"
+                        android:defaultValue="#FF000000"
                         android:key="color_home_chart_background"
                         android:title="@string/main_chart_background"
                         app:colorpicker_noneSelectedSummaryText="@string/default_color_selected"
@@ -244,7 +244,7 @@
                         app:colorpicker_showHex="false" />
 
                     <com.eveningoutpost.dexdrip.utilitymodels.ColorPicker
-                        android:defaultValue="#B3000000"
+                        android:defaultValue="#FF000000"
                         android:key="color_widget_chart_background"
                         android:title="@string/widget_chart_background"
                         app:colorpicker_noneSelectedSummaryText="@string/default_color_selected"
@@ -334,13 +334,13 @@
                     android:title="@string/flair_colors">
 
                     <SwitchPreference
-                        android:defaultValue="false"
+                        android:defaultValue="true"
                         android:key="use_flair_colors"
                         android:switchTextOff="@string/short_off_text_for_switches"
                         android:switchTextOn="@string/short_on_text_for_switches"
                         android:title="@string/use_flair_colors" />
                     <com.eveningoutpost.dexdrip.utilitymodels.ColorPicker
-                        android:defaultValue="#00000000"
+                        android:defaultValue="#FF000000"
                         android:key="color_upper_flair_bar"
                         android:title="@string/upper_title_bar_flair"
                         app:colorpicker_noneSelectedSummaryText="@string/default_color_selected"
@@ -662,7 +662,7 @@
                     android:key="gap_before_force_text_color"
                     android:title=" " />
                 <CheckBoxPreference
-                    android:defaultValue="true"
+                    android:defaultValue="false"
                     android:key="force_lock_screen_text_color"
                     android:summary="@string/summary_force_lockscreen_text_color"
                     android:title="@string/title_force_lockscreen_text_color" />

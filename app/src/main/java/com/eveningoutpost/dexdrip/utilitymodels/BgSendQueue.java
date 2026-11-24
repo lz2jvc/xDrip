@@ -124,11 +124,7 @@ public class BgSendQueue extends Model {
                 if (Home.activityVisible) {
                     context.sendBroadcast(new Intent(Intents.ACTION_NEW_BG_ESTIMATE_NO_DATA));
                 }
-
-                if (AppWidgetManager.getInstance(context).getAppWidgetIds(new ComponentName(context, xDripWidget.class)).length > 0) {
-                    //context.startService(new Intent(context, WidgetUpdateService.class));
-                    JoH.startService(WidgetUpdateService.class);
-                }
+                                WidgetUpdateService.staticRefreshWidgets();
             }
 
             // emit local broadcast

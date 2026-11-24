@@ -8,6 +8,9 @@ import com.eveningoutpost.dexdrip.models.BloodTest;
 import com.eveningoutpost.dexdrip.models.Calibration;
 import com.eveningoutpost.dexdrip.models.JoH;
 import com.eveningoutpost.dexdrip.models.UserError;
+import com.eveningoutpost.dexdrip.models.Iob;
+import com.eveningoutpost.dexdrip.models.Treatments;
+import java.util.List;
 import com.eveningoutpost.dexdrip.calibrations.CalibrationAbstract;
 import com.eveningoutpost.dexdrip.calibrations.PluggableCalibration;
 import com.eveningoutpost.dexdrip.stats.StatsResult;
@@ -179,6 +182,31 @@ public class StatusLine {
                 }
             }
 
+        }
+        // Universal COB display (external status + local simulation), shown only when COB > 0
+        double currentCob = 0;
+        try {
+            final String extStatus = ExternalStatusService.getLastStatusLine();
+            if (extStatus != null && extStatus.contains("COB:")) {
+                final String afterCob = extStatus.substring(extStatus.indexOf("COB:") + 4).trim();
+                final String numPart = afterCob.split("[^0-9.]")[0];
+                if (!numPart.isEmpty()) {
+                    currentCob = Double.parseDouble(numPart);
+                }
+            }
+        } catch (Exception ignored) { }
+
+        if (currentCob <= 0) {
+            try {
+                final List<Iob> iobList = Treatments.ioBForGraph_new(JoH.tsl());
+                if (iobList != null && !iobList.isEmpty()) {
+                    currentCob = iobList.get(0).cob;
+                }
+            } catch (Exception ignored) { }
+        }
+
+        if (currentCob > 0.1) {
+            append(sb, String.format("COB: %.0fg", currentCob));
         }
 
         if (Pref.getBoolean("status_line_time", false)) {

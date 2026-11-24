@@ -10,13 +10,18 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-      - name: Create Fixed Debug Keystore
-        run: |
-          mkdir -p ~/.android
-          keytool -genkeypair -v -keystore ~/.android/debug.keystore -storepass android -alias androiddebugkey -keypass android -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=xDrip2,O=Android,C=BG" -startdate "2025/01/01 00:00:00"
       - name: Build Debug APK
         run: chmod +x gradlew && ./gradlew assembleDebug
+      - name: Align and Sign APK with Official Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > xdrip2.keystore
+          RAW_APK=$(find app/build/outputs/apk -name "*.apk" | head -n 1)
+          BUILD_TOOLS=$(find $ANDROID_HOME/build-tools -maxdepth 1 -mindepth 1 | sort -V | tail -n 1)
+          zip -d "$RAW_APK" "META-INF/*.SF" "META-INF/*.RSA" "META-INF/*.DSA" "META-INF/MANIFEST.MF" || true
+          "$BUILD_TOOLS/zipalign" -f -p 4 "$RAW_APK" app/build/outputs/apk/xDrip2-signed.apk
+          "$BUILD_TOOLS/apksigner" sign --ks xdrip2.keystore --ks-pass pass:android --ks-key-alias androiddebugkey --key-pass pass:android app/build/outputs/apk/xDrip2-signed.apk
+          "$BUILD_TOOLS/apksigner" verify --print-certs app/build/outputs/apk/xDrip2-signed.apk | grep "SHA-256"
       - uses: actions/upload-artifact@v4
         with:
           name: xDrip2-APK
-          path: app/build/outputs/apk/**/*.apk
+          path: app/build/outputs/apk/xDrip2-signed.apk

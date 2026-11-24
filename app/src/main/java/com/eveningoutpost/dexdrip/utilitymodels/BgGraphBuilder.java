@@ -30,6 +30,7 @@ import com.eveningoutpost.dexdrip.models.JoH;
 import com.eveningoutpost.dexdrip.models.Libre2RawValue;
 import com.eveningoutpost.dexdrip.models.Prediction;
 import com.eveningoutpost.dexdrip.models.Profile;
+import com.eveningoutpost.dexdrip.insulin.InsulinManager;
 import com.eveningoutpost.dexdrip.models.StepCounter;
 import com.eveningoutpost.dexdrip.models.Treatments;
 import com.eveningoutpost.dexdrip.models.UserError;
@@ -1839,6 +1840,7 @@ public class BgGraphBuilder {
                                     float yPosition = (float) height;
                                     yPosition = clampNonGlucoseY(yPosition + windowBottomOffset);
                                     PointValue pv = new HPointValue((double) fuzzed_timestamp, yPosition);
+                                    pv.setLabel(String.format("%.2f u", iob.iob));
                                     iobValues.add(pv);
                                     double activityheight = iob.jActivity * 3; // currently scaled by profile
                                     if (activityheight > cob_insulin_max_draw_value)
@@ -1846,6 +1848,8 @@ public class BgGraphBuilder {
                                     yPosition = (float) activityheight;
                                     yPosition = clampNonGlucoseY(yPosition + windowBottomOffset);
                                     PointValue av = new HPointValue((double) fuzzed_timestamp, yPosition);
+                                    String rapidName = (InsulinManager.getProfile(0) != null) ? InsulinManager.getProfile(0).getName() : "";
+                                    av.setLabel(String.format("%.2f u/h %s", iob.jActivity, rapidName).trim());
                                     activityValues.add(av);
                                 }
 
@@ -1856,6 +1860,7 @@ public class BgGraphBuilder {
                                     float yPosition = (float) height;
                                     yPosition = clampNonGlucoseY(yPosition + windowBottomOffset);
                                     PointValue pv = new HPointValue((double) fuzzed_timestamp, yPosition);
+                                    pv.setLabel(String.format("%.1f g COB", iob.cob));
                                     if (d)
                                         Log.d(TAG, "Cob total record: " + JoH.qs(height) + " " + JoH.qs(iob.cob) + " " + Double.toString(pv.getY()) + " @ timestamp: " + Long.toString(iob.timestamp));
                                     cobValues.add(pv); // warning should not be hardcoded
@@ -2475,7 +2480,9 @@ public class BgGraphBuilder {
             final double ypos = pointValue.getY();
 
             final String message;
-
+            if (alternate.length() == 0 && pointValue.getLabelAsChars() != null && pointValue.getLabelAsChars().length > 0) {
+    alternate = String.valueOf(pointValue.getLabelAsChars());
+}
             if (alternate.length() > 0) {
                 message = timeFormat.format(time) + "    " + alternate;
             } else {

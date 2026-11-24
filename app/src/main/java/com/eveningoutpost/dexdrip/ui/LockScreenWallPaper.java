@@ -66,7 +66,7 @@ public class LockScreenWallPaper {
         if (TimeRangeUtils.areWeInTimePeriod("number_wall")) {
             final BestGlucose.DisplayGlucose dg = BestGlucose.getDisplayGlucose();
             if (dg != null && !dg.isReallyStale()) {
-                if (Pref.getBoolean("force_lock_screen_text_color", true)) {
+                if (Pref.getBoolean("force_lock_screen_text_color", false)) {
                     // Always use user-chosen color
                     textColor = getCol(ColorCache.X.color_number_wall);
                 } else {

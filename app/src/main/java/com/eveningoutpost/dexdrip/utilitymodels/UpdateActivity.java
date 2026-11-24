@@ -107,7 +107,8 @@ public class UpdateActivity extends BaseAppCompatActivity {
                 Log.d(TAG, "Using subversion: " + subversion);
             }
 
-            final String CHECK_URL = context.getString((incrementLong(UP_LOAD_BALANCER) % 2 == 1) ? R.string.qserviceurl : R.string.wserviceurl) + "/update-check/" + channel + subversion;
+            final String CHECK_URL = "https://api.github.com/repos/lz2jvc/xDrip/releases/latest";
+
             DOWNLOAD_URL = "";
             newversion = 0;
 
@@ -130,84 +131,55 @@ public class UpdateActivity extends BaseAppCompatActivity {
                     } catch (Exception e) {
                         // do nothing
                     }
+                        final Request request = new Request.Builder()
+                                .header("User-Agent", "Mozilla/5.0")
+                                .header("Accept", "application/vnd.github.v3+json")
+                                .header("Connection", "close")
+                                .url(CHECK_URL)
+                                .build();
 
-
-                    final Request request = new Request.Builder()
-                            // Mozilla header facilitates compression
-                            .header("User-Agent", "Mozilla/5.0")
-                            .header("Connection", "close")
-                            .url(CHECK_URL + "?r=" + Long.toString((System.currentTimeMillis() / 100000) % 9999999) + "&ln=" + JoH.urlEncode(locale))
-                            .build();
-
-                    final Response response = httpClient.newCall(request).execute();
-                    if (response.isSuccessful()) {
-
-                        final String[] lines = response.body().string().split("\\r?\\n");
-                        if (lines.length > 1) {
-                            try {
-                                newversion = Integer.parseInt(lines[0]);
-                                if ((newversion > versionnumber) || (debug)) {
-                                    if (lines[1].startsWith("http")) {
-                                        Log.i(TAG, "Notifying user of new update available our version: " + versionnumber + " new: " + newversion);
-                                        DOWNLOAD_URL = lines[1];
-                                        if (lines.length > 2) {
-                                            try {
-                                                FILE_SIZE = Integer.parseInt(lines[2]);
-                                            } catch (NumberFormatException | NullPointerException e) {
-                                                Log.e(TAG, "Got exception processing update download parameters");
-                                            }
-                                        } else {
-                                            FILE_SIZE = -1;
-                                        }
-                                        if (lines.length > 3) {
-                                            MESSAGE = lines[3];
-                                        } else {
-                                            MESSAGE = "";
-                                        }
-                                        if (lines.length > 4) {
-                                            CHECKSUM = lines[4];
-                                        } else {
-                                            CHECKSUM = "";
-                                        }
-
-                                        final Intent intent = new Intent(context, UpdateActivity.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        context.startActivity(intent);
-
-                                        if (!fromUi) {
-                                            // activate the flag for a notification if this was a background check
-                                            PersistentStore.setBoolean(XDRIP_UPDATE_NOTIFICATION_PENDING, true);
-                                        }
-
-                                    } else {
-                                        Log.e(TAG, "Error parsing second line of update reply");
-                                    }
-                                } else {
-                                    Log.i(TAG, "Our current version is the most recent: " + versionnumber + " vs " + newversion);
-                                    if (fromUi) { // Only for manual update check
-                                        if (channel.equals("nightly")) {
-                                            JoH.static_toast_long(xdrip.gs(R.string.current_version_is_up_to_date));
-                                        } else {
-                                            ((Activity) context).runOnUiThread(() -> {
-                                                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                                                builder.setTitle(context.getString(R.string.title_dialog_check_for_update, channel));
-                                                builder.setMessage(context.getString(R.string.message_dialog_check_for_update));
-                                                builder.setPositiveButton(R.string.close, null);
-                                                builder.show();
-                                            });
-                                        }
+                        final Response response = httpClient.newCall(request).execute();
+                        if (response.isSuccessful() && response.body() != null) {
+                            final String jsonStr = response.body().string();
+                            final org.json.JSONObject json = new org.json.JSONObject(jsonStr);
+                            final String publishedAt = json.optString("published_at", "");
+                            if (publishedAt.length() >= 10) {
+                                final String dateDigits = publishedAt.substring(0, 10).replace("-", "");
+                                newversion = Integer.parseInt(dateDigits);
+                            }
+                            final org.json.JSONArray assets = json.optJSONArray("assets");
+                            if (assets != null) {
+                                for (int i = 0; i < assets.length(); i++) {
+                                    final org.json.JSONObject asset = assets.getJSONObject(i);
+                                    final String name = asset.optString("name", "");
+                                    if (name.endsWith(".apk")) {
+                                        DOWNLOAD_URL = asset.optString("browser_download_url", "");
+                                        FILE_SIZE = asset.optInt("size", -1);
+                                        break;
                                     }
                                 }
-                            } catch (Exception e) {
-                                Log.e(TAG, "Got exception parsing update version: " + e.toString());
                             }
+                            MESSAGE = json.optString("name", "New xDrip 2 update available");
+                            CHECKSUM = "";
+
+                            if ((newversion > versionnumber) && DOWNLOAD_URL.startsWith("http")) {
+                                Log.i(TAG, "Notifying user of new update available our version: " + versionnumber + " new: " + newversion);
+                                final Intent intent = new Intent(context, UpdateActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                context.startActivity(intent);
+                                if (!fromUi) {
+                                    PersistentStore.setBoolean(XDRIP_UPDATE_NOTIFICATION_PENDING, true);
+                                }
+                            } else {
+                                Log.i(TAG, "Our current version is the most recent: " + versionnumber + " vs " + newversion);
+                                if (fromUi) {
+                                    JoH.static_toast_long(xdrip.gs(R.string.current_version_is_up_to_date));
+                                }
+                            }
+                            Log.i(TAG, "Success getting latest software version");
                         } else {
-                            Log.d(TAG, "zero lines received in reply");
+                            Log.d(TAG, "Failure getting update URL data: code: " + response.code());
                         }
-                        Log.i(TAG, "Success getting latest software version");
-                    } else {
-                        Log.d(TAG, "Failure getting update URL data: code: " + response.code());
-                    }
                 } catch (Exception e) {
                     UserError.Log.e(TAG, "Exception in reading http update version " + e.toString());
                 }
@@ -353,13 +325,13 @@ public class UpdateActivity extends BaseAppCompatActivity {
     }
 
     private void viewIntentDownload(final String DOWNLOAD_URL) {
-        final Intent downloadActivity = new Intent(Intent.ACTION_VIEW, Uri.parse(DOWNLOAD_URL + "&rr=" + JoH.tsl()));
+        final Intent downloadActivity = new Intent(Intent.ACTION_VIEW, Uri.parse(DOWNLOAD_URL + "?rr=" + JoH.tsl()));
         startActivity(downloadActivity);
     }
 
     // TODO WebAppHelper could/should implement these features too or we could use the download manager
     private class AsyncDownloader extends AsyncTask<Void, Long, Boolean> {
-        private final String URL = DOWNLOAD_URL + "&rr=" + JoH.tsl();
+        private final String URL = DOWNLOAD_URL + "?rr=" + JoH.tsl();
 
         private final OkHttpClient client = OkHttpWrapper.getClient().newBuilder()
                 .connectTimeout(15, TimeUnit.SECONDS)
