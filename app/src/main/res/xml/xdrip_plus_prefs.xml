@@ -140,7 +140,7 @@
                         app:colorpicker_selectNoneButtonText="@string/revert_to_default"
                         app:colorpicker_showHex="false" />
                     <com.eveningoutpost.dexdrip.utilitymodels.ColorPicker
-                        android:defaultValue="#7700aa"
+                        android:defaultValue="#F49DFF"
                         android:key="color_predictive_dark"
                         android:title="@string/predictive_color_dark"
                         app:colorpicker_noneSelectedSummaryText="@string/default_color_selected"
