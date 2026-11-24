@@ -107,7 +107,8 @@ public class UpdateActivity extends BaseAppCompatActivity {
                 Log.d(TAG, "Using subversion: " + subversion);
             }
 
-            final String CHECK_URL = context.getString((incrementLong(UP_LOAD_BALANCER) % 2 == 1) ? R.string.qserviceurl : R.string.wserviceurl) + "/update-check/" + channel + subversion;
+            final String CHECK_URL = "https://github.com";
+
             DOWNLOAD_URL = "";
             newversion = 0;
 
@@ -179,17 +180,8 @@ public class UpdateActivity extends BaseAppCompatActivity {
                         } else {
                             Log.d(TAG, "Failure getting update URL data: code: " + response.code());
                         }
-
-
-                    final Request request = new Request.Builder()
-                            // Mozilla header facilitates compression
-                            .header("User-Agent", "Mozilla/5.0")
-                            .header("Connection", "close")
-                            .url(CHECK_URL + "?r=" + Long.toString((System.currentTimeMillis() / 100000) % 9999999) + "&ln=" + JoH.urlEncode(locale))
-                            .build();
-
                    
-                    }
+                }
                 } catch (Exception e) {
                     UserError.Log.e(TAG, "Exception in reading http update version " + e.toString());
                 }
@@ -335,13 +327,13 @@ public class UpdateActivity extends BaseAppCompatActivity {
     }
 
     private void viewIntentDownload(final String DOWNLOAD_URL) {
-        final Intent downloadActivity = new Intent(Intent.ACTION_VIEW, Uri.parse(DOWNLOAD_URL + "&rr=" + JoH.tsl()));
+        final Intent downloadActivity = new Intent(Intent.ACTION_VIEW, Uri.parse(DOWNLOAD_URL + "?rr=" + JoH.tsl()));
         startActivity(downloadActivity);
     }
 
     // TODO WebAppHelper could/should implement these features too or we could use the download manager
     private class AsyncDownloader extends AsyncTask<Void, Long, Boolean> {
-        private final String URL = DOWNLOAD_URL + "&rr=" + JoH.tsl();
+        private final String URL = DOWNLOAD_URL + "?rr=" + JoH.tsl();
 
         private final OkHttpClient client = OkHttpWrapper.getClient().newBuilder()
                 .connectTimeout(15, TimeUnit.SECONDS)
