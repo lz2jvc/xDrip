@@ -94,10 +94,10 @@ public class UpdateActivity extends BaseAppCompatActivity {
         String channel = prefs.getString("update_channel", "beta");
         if (last_check_time == 0)
             last_check_time = prefs.getLong(last_update_check_time, 0);
-        long checkFrequency = channel.equals("beta") ? (86300_000 * 3) : (86300_000 * 2);
-        if (((JoH.tsl() - last_check_time) > checkFrequency) || (debug)) {
-            last_check_time = JoH.tsl();
-            prefs.edit().putLong(last_update_check_time, last_check_time).apply();
+            long checkFrequency = 3600_000;
+     if (((JoH.tsl() - last_check_time) > checkFrequency) || (debug) || fromUi) {
+         last_check_time = JoH.tsl();
+         prefs.edit().putLong(last_update_check_time, last_check_time).apply();
 
             Log.i(TAG, "Checking for a software update, channel: " + channel);
 
@@ -131,8 +131,9 @@ public class UpdateActivity extends BaseAppCompatActivity {
                     } catch (Exception e) {
                         // do nothing
                     }
-                        final Request request = new Request.Builder()
-                                .header("User-Agent", "Mozilla/5.0")
+                       final Request request = new Request.Builder()
+                         .header("User-Agent", "xDrip2-Android-Updater")
+
                                 .header("Accept", "application/vnd.github.v3+json")
                                 .header("Connection", "close")
                                 .url(CHECK_URL)
@@ -192,13 +193,11 @@ public class UpdateActivity extends BaseAppCompatActivity {
             }).start();
         }
     }
-
-    public static void forceUpdateCheckNow() {
-        JoH.static_toast_long(xdrip.gs(R.string.checking_for_update));
-        UpdateActivity.last_check_time = -2;
-        UpdateActivity.checkForAnUpdate(xdrip.getAppContext());
-    }
-
+ public static void forceUpdateCheckNow() {
+     JoH.static_toast_long(xdrip.gs(R.string.checking_for_update));
+     UpdateActivity.last_check_time = -2;
+     UpdateActivity.checkForAnUpdate(xdrip.getAppContext(), true);
+ }
     public static boolean testAndSetNightly(final boolean set) {
         val update_channel = "update_channel";
         val nightly_channel = "nightly";
