@@ -68,8 +68,8 @@ public class UpdateActivity extends BaseAppCompatActivity {
     private static OkHttpClient httpClient = null;
     public static long last_check_time = 0;
     private static SharedPreferences prefs;
-    private static int versionnumber = 0;
-    private static int newversion = 0;
+    private static long versionnumber = 0;
+    private static long newversion = 0;
     private static String lastDigest = "";
     private final static int MY_PERMISSIONS_REQUEST_STORAGE_DOWNLOAD = 105;
     private static boolean downloading = false;
@@ -143,10 +143,15 @@ public class UpdateActivity extends BaseAppCompatActivity {
                             final String jsonStr = response.body().string();
                             final org.json.JSONObject json = new org.json.JSONObject(jsonStr);
                             final String publishedAt = json.optString("published_at", "");
-                            if (publishedAt.length() >= 10) {
-                                final String dateDigits = publishedAt.substring(0, 10).replace("-", "");
-                                newversion = Integer.parseInt(dateDigits);
+                            if (publishedAt.length() >= 19) {
+                            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.US);
+                            sdf.setTimeZone(java.util.TimeZone.getTimeZone("UTC"));
+                            java.util.Date parsedDate = sdf.parse(publishedAt.substring(0, 19));
+                            if (parsedDate != null) {
+                                newversion = parsedDate.getTime() / 1000L;
                             }
+                        }
+
                             final org.json.JSONArray assets = json.optJSONArray("assets");
                             if (assets != null) {
                                 for (int i = 0; i < assets.length(); i++) {
@@ -214,7 +219,7 @@ public class UpdateActivity extends BaseAppCompatActivity {
     private static void getVersionInformation(Context context) {
         // try {
         if (versionnumber == 0) {
-            versionnumber = BuildConfig.buildVersion;
+        versionnumber = BuildConfig.buildTimestamp / 1000L;
         }
     }
 
@@ -253,7 +258,7 @@ public class UpdateActivity extends BaseAppCompatActivity {
         });
 
         TextView detail = (TextView) findViewById(R.id.updatedetail);
-        detail.setText(getString(R.string.new_version_date_colon) + Integer.toString(newversion) + "\n" + getString(R.string.old_version_date_colon) + Integer.toString(versionnumber));
+        detail.setText(getString(R.string.new_version_date_colon) + JoH.dateTimeText(newversion * 1000L) + "\n" + getString(R.string.old_version_date_colon) + JoH.dateTimeText(versionnumber * 1000L));
         TextView channel = (TextView) findViewById(R.id.update_channel);
         channel.setText(getString(R.string.update_channel_colon_space) + JoH.ucFirst(prefs.getString("update_channel", "beta")));
 
@@ -367,8 +372,8 @@ public class UpdateActivity extends BaseAppCompatActivity {
                     }
                 }
                 if (filename.length() < 5) {
-                    filename = "xDrip-plus-" + Integer.toString(newversion) + ".apk";
-                }
+                    filename = "xDrip-plus-" + Long.toString(newversion) + ".apk";
+               }
 
                 Log.d(TAG, "Filename: " + filename);
                 if (response.code() == 200) {
