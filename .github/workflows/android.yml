@@ -1,6 +1,21 @@
 name: Build APK
 on:
   workflow_dispatch:
+    inputs:
+      publish_release:
+        description: 'Publish public GitHub Release? (Check ONLY when ready for users)'
+        required: true
+        type: boolean
+        default: false
+      release_notes:
+        description: 'What is new in this release? (Short description)'
+        required: false
+        type: string
+        default: 'Bug fixes and stability improvements.'
+
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,7 +36,19 @@ jobs:
           "$BUILD_TOOLS/zipalign" -f -p 4 "$RAW_APK" app/build/outputs/apk/xDrip2-signed.apk
           "$BUILD_TOOLS/apksigner" sign --ks xdrip2.keystore --ks-pass pass:android --ks-key-alias androiddebugkey --key-pass pass:android app/build/outputs/apk/xDrip2-signed.apk
           "$BUILD_TOOLS/apksigner" verify --print-certs app/build/outputs/apk/xDrip2-signed.apk | grep "SHA-256"
+      - name: Get Current Date
+        id: date
+        run: echo "today=$(date +'%Y.%m.%d')" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
         with:
           name: xDrip2-APK
           path: app/build/outputs/apk/xDrip2-signed.apk
+      - name: Create GitHub Release
+        if: ${{ inputs.publish_release == true }}
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.date.outputs.today }}-b${{ github.run_number }}
+          name: xDrip 2 (${{ steps.date.outputs.today }})
+          body: ${{ inputs.release_notes }}
+          files: app/build/outputs/apk/xDrip2-signed.apk
+          make_latest: true
