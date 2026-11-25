@@ -70,7 +70,7 @@ android {
         versionName generateVersionName()
         buildConfigField "int", "buildVersion", generateVersionNumberString()
         buildConfigField "String", "buildUUID", generateRandomUUID()
-        buildConfigField "long", "buildTimestamp", generateTimestamp()
+        buildConfigField "long", "buildTimestamp", "${System.currentTimeMillis() + 300000}L"
         buildConfigField "int", "targetSDK", targetSdkVersion.mApiLevel.toString()
         //vectorDrawables.useSupportLibrary = true // broken in newer gradle versions
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -197,7 +197,7 @@ android {
             versionNameSuffix "-dev"
             buildConfigField "int", "buildVersion", "2021010100"
             buildConfigField "String", "buildUUID", "\"0f79a60a-5616-99be-8eb1-a430edcfd9fd\""
-            buildConfigField "long", "buildTimestamp", "1609459200L"
+            buildConfigField "long", "buildTimestamp", "${System.currentTimeMillis() + 300000}L"
            //resConfigs "en", "xxhdpi"
         }
 
