@@ -264,6 +264,15 @@ public class UpdateActivity extends BaseAppCompatActivity {
         updateMessageText.setText(MESSAGE);
     }
 
+    private String formatVersionDate(int version) {
+        String v = Integer.toString(version);
+        if (v.length() == 10) {
+            // Extracts YYMMDD from e.g. 2126112114 -> 2026-11-21 (valid through year 2099)
+            return "20" + v.substring(2, 4) + "-" + v.substring(4, 6) + "-" + v.substring(6, 8);
+        }
+        return v;
+    }
+
     public void closeActivity(View myview) {
         downloading = false;
         finish();
