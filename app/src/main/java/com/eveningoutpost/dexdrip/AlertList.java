@@ -94,9 +94,10 @@ public class AlertList extends ActivityWithMenu {
     }
 
 
-    class AlertsOnItemLongClickListener implements AdapterView.OnItemLongClickListener {
+    class AlertsOnItemClickListener implements AdapterView.OnItemClickListener {
+       
         @Override
-        public boolean onItemLongClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
             anim.setAnimationListener(new Animation.AnimationListener() {
 
                 @Override
@@ -126,7 +127,6 @@ public class AlertList extends ActivityWithMenu {
                 }
             });
             view.startAnimation(anim);
-            return true;
         }
     }
 
@@ -150,10 +150,9 @@ public class AlertList extends ActivityWithMenu {
         addListenerOnButton();
         FillLists();
         anim = AnimationUtils.loadAnimation(this, R.anim.fade_anim);
-        listViewLow.setOnItemLongClickListener(new AlertsOnItemLongClickListener());
-        listViewHigh.setOnItemLongClickListener(new AlertsOnItemLongClickListener());
+        listViewLow.setOnItemClickListener(new AlertsOnItemClickListener());
+        listViewHigh.setOnItemClickListener(new AlertsOnItemClickListener());
     }
-
     @Override
     public String getMenuName() {
         return getString(R.string.level_alerts);
