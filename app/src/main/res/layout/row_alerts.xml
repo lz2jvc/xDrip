@@ -75,5 +75,5 @@
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"  />
     </LinearLayout>
 
-
+    </LinearLayout>
 </LinearLayout>
