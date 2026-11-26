@@ -3,8 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    android:gravity="center_vertical"
-    android:longClickable="true">
+    android:gravity="center_vertical">
   
     <ImageView
     android:layout_width="24dp"
@@ -29,7 +28,7 @@
             android:layout_height="wrap_content"
             android:text="TextView"
             android:layout_weight="1"
-              android:gravity="center"
+            android:gravity="start|center_vertical"
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"  />
 
         <TextView
@@ -61,7 +60,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:text="TextView"
-          android:gravity="center"
+          android:gravity="start|center_vertical"
           android:layout_weight="1"
           android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"  />
 
