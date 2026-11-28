@@ -11,17 +11,24 @@
     android:paddingRight="6dp"
     android:paddingTop="1dp">
 
-    <TextView
+      <TextView
         android:id="@+id/dialed_no_textview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:layout_gravity="center"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_margin="5dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/tick_thing"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
+        android:maxLines="1"
+        android:paddingStart="12dp"
+        android:paddingEnd="38dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeStepGranularity="1sp"
         android:textColor="@android:color/white"
         android:textSize="@dimen/keypad_top_text_size"
         tools:text="25.5 mmol/l" />
